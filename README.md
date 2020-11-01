@@ -25,8 +25,10 @@ Teniendo el proyecto descargado se puede en el IDE, Dar clic en Clean With Build
 
 ### Agregar fechas
 
+
 ![Selección_070](https://user-images.githubusercontent.com/38901171/97792756-969d0900-1bb0-11eb-9377-750dc47f4043.jpg)
 
 ### Validar vuelos diponibles
+
 
 ![Selección_071](https://user-images.githubusercontent.com/38901171/97792758-9e5cad80-1bb0-11eb-960d-0c1301eb9b91.jpg)
