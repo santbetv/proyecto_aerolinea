@@ -6,6 +6,7 @@
 package com.aerolinea.controlador;
 
 import com.aerolinea.dao.FlightDAO;
+import com.aerolinea.excepcion.AerolineaExcepcion;
 import com.aerolinea.modelo.Flight;
 import com.aerolinea.utilidad.Constantes;
 import com.aerolinea.utilidad.ConsumoRestWS;
@@ -106,50 +107,70 @@ public class ControladorFlight implements Serializable {
         try {
 
             String json = "{\"Origin\":\"" + ori + "\",\"Destination\":\"" + des + "\",\"From\":\"" + fecha + "\"}";
-            
+
             //Se adiciona manejos de exepciones 
 //            AerolineaValidador.verificarDatosIguales(ori, des);
-            
-            String[] respuesta = ConsumoRestWS.comsumoRestPost(json, Constantes.RUTA_RECURSOS, "");
+            if (!ori.equals(des)) {
+                String[] respuesta = ConsumoRestWS.comsumoRestPost(json, Constantes.RUTA_RECURSOS, "");
 
-            if (respuesta[0].equals("true")) {
+                if (respuesta[0].equals("true")) {
 
-                String dataOuputFiltrada = respuesta[1];
-                dataOuputFiltrada = dataOuputFiltrada.substring(1, dataOuputFiltrada.length() - 1).replace("\\", "");
-                JSONArray arregloJson = new JSONArray(dataOuputFiltrada);
+                    String dataOuputFiltrada = respuesta[1];
+                    dataOuputFiltrada = dataOuputFiltrada.substring(1, dataOuputFiltrada.length() - 1).replace("\\", "");
+                    JSONArray arregloJson = new JSONArray(dataOuputFiltrada);
 
-                for (int i = 0; i < arregloJson.length(); i++) {
+                    for (int i = 0; i < arregloJson.length(); i++) {
 
-                    arrayDeJsonAero = new ArrayList<>();
-                    JSONObject valores = arregloJson.getJSONObject(i);
+                        arrayDeJsonAero = new ArrayList<>();
+                        JSONObject valores = arregloJson.getJSONObject(i);
 
-                    arrayDeJsonAero.add(new Flight(valores.getString("DepartureStation"),
-                            valores.getString("ArrivalStation"),
-                            valores.getString("FlightNumber"),
-                            valores.getDouble("Price"),
-                            valores.getString("Currency"),
-                            ParseFecha(valores.getString("DepartureDate"))));
+                        arrayDeJsonAero.add(new Flight(valores.getString("DepartureStation"),
+                                valores.getString("ArrivalStation"),
+                                valores.getString("FlightNumber"),
+                                valores.getDouble("Price"),
+                                valores.getString("Currency"),
+                                ParseFecha(valores.getString("DepartureDate"))));
+                    }
+
+                    FacesContext context = FacesContext.getCurrentInstance();
+
+                    context.addMessage(null, new FacesMessage("Successful", "Se encuentra en busqueda de vuelos"));
+
+                } else {
+                    FacesContext context = FacesContext.getCurrentInstance();
+
+                    context.addMessage(null, new FacesMessage("Error", "Intenta de nuevo"));
                 }
+            } else {
 
                 FacesContext context = FacesContext.getCurrentInstance();
 
-                context.addMessage(null, new FacesMessage("Successful", "Se encuentra en busqueda de vuelos"));
-
-            }else{
-                FacesContext context = FacesContext.getCurrentInstance();
-
-                context.addMessage(null, new FacesMessage("Error", "Intenta de nuevo"));
+                context.addMessage(null, new FacesMessage("Error", "Colocar diferenctes ciudades"));
             }
+
         } catch (Exception e) {
-            System.out.println("Eroor de proceso"+e.getMessage());
+            System.out.println("Eroor de proceso" + e.getMessage());
         }
     }
 
     //me todos de consumo Este per utilizar la base de datos Mysql, Con ORM HIbernate y JPA, mostrando lo que se tiene alli adentro
-    public void obtenerClientes() {
-        FlightDAO clienteDAO = new FlightDAO();
-        
-        System.out.println("datoss: " + clienteDAO.obtenerClientes());
+    public void obtenerVuelos() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+            FlightDAO clienteDAO = new FlightDAO();
+
+            //System.out.println("datoss: " + clienteDAO.obtenerClientes());
+            for (Flight obtenerCliente : clienteDAO.obtenerClientes()) {
+
+                context.addMessage(null, new FacesMessage("Successful", "Vuelos realizados : " + obtenerCliente.getDeparture_station() + " - " + obtenerCliente.getArrival_station() + "\n"));
+            }
+
+        } catch (Exception e) {
+
+            context.addMessage(null, new FacesMessage("Error", "Configurar Bases de datos"));
+        }
+
     }
 
     /**

@@ -33,7 +33,7 @@ public class FlightDAO implements IGestionarDao<Flight>{
         List<Flight> listaClientes = new ArrayList<>();
         Query q = entity.createQuery("SELECT f FROM Flight f");
         listaClientes = q.getResultList();
-        JPAUtil.shutdown();
+//        JPAUtil.shutdown();
         return listaClientes;
     }
 
