@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Inicio</title>
+    </h:head>
+
+    <h:body>
+
+        <h:form>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+
+            <p:commandButton value="RESERVA TU VIAJE" update="basic" icon="ui-icon-search" onclick="PF('pnlBuscar').show(); return false;" style="width: 150px; height: 70px"/>
+
+            <p:separator />
+            <p:panel id="basic" header="Inicio" footer="Movie Details" style="margin-bottom:20px">
+
+
+
+                <p:dataTable var="vuelos" value="#{controladorFlight.arrayDeJsonAero}">
+                    <f:facet name="header">
+                        Viajes Disponibles
+                    </f:facet>
+
+                    <p:column headerText="Vuelo">
+                        <h:outputText value="#{vuelos.flight_number}" />
+                    </p:column>
+
+                    <p:column headerText="Origen">
+                        <h:outputText value="#{vuelos.departure_station}" />
+                    </p:column>
+
+                    <p:column headerText="Destino">
+                        <h:outputText value="#{vuelos.arrival_station}" />
+                    </p:column>
+
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{vuelos.price}" />
+                    </p:column>
+
+                    <f:facet name="footer">
+                        En total tiene una cantidad #{controladorFlight.arrayDeJsonAero.size()} Vuelos.
+                    </f:facet>
+
+                </p:dataTable>
+
+
+
+                <p:dialog id="pnlBuscar"
+                          widgetVar="pnlBuscar"
+                          modal="true"
+                          header="Ingreso en busqueda de vuelos">
+
+                    <p:panelGrid columns="2">
+                        <p:panelGrid columns="2" >
+                            <p:outputLabel  value="Origen"/>
+                            <p:selectOneMenu  id="OrigenVeh" value="#{controladorFlight.origen}" style="width: 190px;" >
+                                <f:selectItem itemValue="0" itemLabel="Seleccione uno .." itemEscaped="true"/>
+                                <f:selectItem itemValue="MDE" itemLabel="MDE"/>
+                                <f:selectItem itemValue="BOG" itemLabel="BOG"/>
+                                <f:selectItem itemValue="CTG" itemLabel="CTG"/>
+                                <f:selectItem itemValue="PEI" itemLabel="PEI"/>
+                                <p:ajax event="change" update="OrigenVeh"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel  value="Destino"/>
+                            <p:selectOneMenu  id="DestinoVeh" value="#{controladorFlight.destino}" style="width: 190px;">
+                                <f:selectItem itemValue="0" itemLabel="Seleccione uno .." itemEscaped="true"/>
+                                <f:selectItem itemValue="MDE" itemLabel="MDE"/>
+                                <f:selectItem itemValue="BOG" itemLabel="BOG"/>
+                                <f:selectItem itemValue="CTG" itemLabel="CTG"/>
+                                <f:selectItem itemValue="PEI" itemLabel="PEI"/>
+                                <p:ajax event="change" update="DestinoVeh"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="calFechaIngreso" value="Fecha de viaje"/>
+                            <p:calendar id="calFechaIngreso" value="#{controladorFlight.viaje}" showOn="button" readonlyInput="true" pattern="yyyy-MM-dd" />
+                        </p:panelGrid>
+
+                        <p:commandButton update="basic,growl"
+                                         value="Buscar Vuelos"
+                                         action="#{controladorFlight.buscarVuelos()}"
+                                         oncomplete="PF('pnlBuscar').hide();"/>
+                    </p:panelGrid>
+                </p:dialog>
+                <!--Final -->
+
+            </p:panel>
+
+
+        </h:form>
+
+    </h:body>
+</html>
+
