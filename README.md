@@ -8,7 +8,7 @@ Teniendo el proyecto descargado se puede en el IDE, Dar clic en Clean With Build
 
 ## Ingresa a la app
 http://18.222.77.127:8080/proyecto-aerolinea-1.0-Version/
-###Recuerda colocar una fecha diferente a la de Hoy, superior.
+### Recuerda colocar una fecha diferente a la de Hoy, superior.
 
 ### Actualizar app
 
