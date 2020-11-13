@@ -1,5 +1,5 @@
 # proyecto_aerolinea
-Proyecto java-web EE creado con Java 1.8, MAVEN, JSF, PRIMEFACES, HIBERNATE, JPA, MVC, MODULARIZACIÓN , POO, Base de Dato Mysql,  Creado en IDE Netbeans 11, Servidor de Aplicaciones GlassFish 4.1.1. 
+Proyecto java-web EE creado con Java 1.8, MAVEN, JSF, PRIMEFACES, HIBERNATE, JPA, MVC, MODULARIZACIÓN , POO, Base de Dato Mysql conectada a un RDS en AWS,  Creado en IDE Netbeans 11, Servidor de Aplicaciones GlassFish 4.1.2. 
 
 ## Inicio
 Se puede generar una descarga de este y colocarlo en cualquier entorno ya que gracias a Maven nos ayuda a administrar el proyecto, automatizando el despliegue de esta.
