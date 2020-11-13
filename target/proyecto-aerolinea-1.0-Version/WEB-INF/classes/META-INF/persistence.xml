@@ -7,11 +7,18 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         
         <properties>
-            <!-- Configuring JDBC properties -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bd_aerolinea?useSSL=false"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="amorbb123"/>
+            <!-- Configuring JDBC properties Producción AWS-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://database-mysql-1.cesyxghfwtin.us-east-2.rds.amazonaws.com:3306/bd_aerolinea?useSSL=false"/>
+            <property name="javax.persistence.jdbc.user" value="admin"/>
+            <property name="javax.persistence.jdbc.password" value="admin123456"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+
+            <!-- Configuring JDBC properties Local -->
+<!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bd_aerolinea?useSSL=false"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="contraseña"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>-->
+            
             <!-- Hibernate properties -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
